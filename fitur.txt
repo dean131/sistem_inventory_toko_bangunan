@@ -1,0 +1,23 @@
+- register
+- login 
+
+
+BARANG:
+- tambah 
+- edit 
+- hapus
+- get list 
+- get detail
+- search 
+
+SUPLIER
+- tambah 
+- edit 
+- hapus
+- get list 
+- get detail
+
+TRANSAKSI
+- tambah 
+- tambah qty
+
