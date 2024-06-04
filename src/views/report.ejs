@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LAPORAN PEMBELIAN</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            margin: 0;
+            padding: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        p {
+            margin: 5px 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th,
+        td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f4f4f4;
+        }
+
+        .total-row {
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>LAPORAN PEMBELIAN</h1>
+
+    <p>
+        Laporan Bulan <strong>
+            <%= month %>
+        </strong> Tahun <strong>
+            <%= year %>
+        </strong>
+    </p>
+
+    <p>
+        Total Pembelian: <strong>
+            <%= orders.length %>
+        </strong>
+    </p>
+
+    <p>
+        Total Pendapatan: <strong>Rp <%= orders.reduce((acc, order)=> acc + order.items.reduce((acc, item) => acc +
+                item.price * item.quantity, 0), 0).toLocaleString() %></strong>
+    </p>
+
+    <!-- HTML TABLE USING EJS -->
+    <table border="1" cellspacing="0" cellpadding="10" width="100%">
+        <thead>
+            <tr>
+                <th>No</th>
+                <th>Nama Produk</th>
+                <th>Harga</th>
+                <th>Jumlah</th>
+                <th>Total Harga</th>
+                <th>Pembeli</th>
+                <th>Waktu</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% let counter=1; %>
+                <% orders.forEach(order=> { %>
+                    <% order.items.forEach(item=> { %>
+                        <tr>
+                            <td>
+                                <%= counter++ %>
+                            </td>
+                            <td>
+                                <%= item.product.name %>
+                            </td>
+                            <td>Rp<%= item.price.toLocaleString() %>
+                            </td>
+                            <td>
+                                <%= item.quantity %>
+                            </td>
+                            <td>Rp<%= (item.price * item.quantity).toLocaleString() %>
+                            </td>
+                            <td>
+                                <p>
+                                    <%= order.customerName %>
+                                </p>
+                                <p>
+                                    <%= order.customerPhone %>
+                                </p>
+                            </td>
+                            <td>
+                                <%= new Date(order.isCheckedOut).toLocaleString() %>
+                            </td>
+                        </tr>
+                        <% }) %>
+                            <% }) %>
+        </tbody>
+    </table>
+</body>
+
+</html>

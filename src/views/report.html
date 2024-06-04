@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LAPORAN PEMBELIAN</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>LAPORAN PEMBELIAN</h1>
+    <!-- model Product {
+        id          String    @id 
+        name        String
+        price       Float
+        image       String?
+        stock       Int
+        minStock    Int
+        supplier    Supplier  @relation(fields: [supplierId], references: [id])
+        supplierId  String
+        orderItems  OrderItem[]
+      }
+      
+      model Order {
+        id              String      @id 
+        user            User        @relation(fields: [userId], references: [id])
+        userId          String
+        createdAt       DateTime    @default(now())
+        isCheckedOut    DateTime?
+        customerName    String?
+        customerPhone   String?
+        customerAddress String?
+        totalPrice      Float?
+        items           OrderItem[]
+      }
+      
+      model OrderItem {
+        id        String    @id
+        order     Order     @relation(fields: [orderId], references: [id])
+        orderId   String
+        product   Product   @relation(fields: [productId], references: [id])
+        productId String
+        quantity  Int
+        price     Float
+      } -->
+
+    <!-- HTML TABLE USING EJS -->
+    <table border="1" cellspacing="0" cellpadding="10" width="100%">
+        <thead>
+            <tr>
+                <th>No</th>
+                <th>Nama Produk</th>
+                <th>Harga</th>
+                <th>Jumlah</th>
+                <th>Total Harga</th>
+                <th>Pembeli</th>
+                <th>Waktu</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% for (let i=0; i < orders.length; i++) { %>
+                <% for (let j=0; j < orders[i].items.length; j++) { %>
+                    <tr>
+                        <td>
+                            <%= i + 1 %>
+                        </td>
+                        <td>
+                            <%= orders[i].items[j].product.name %>
+                        </td>
+                        <td>
+                            <%= orders[i].items[j].price %>
+                        </td>
+                        <td>
+                            <%= orders[i].items[j].quantity %>
+                        </td>
+                        <td>
+                            <%= orders[i].items[j].price * orders[i].items[j].quantity %>
+                        </td>
+                        <td>
+                            <%= orders[i].customerName %>
+                        </td>
+                        <td>
+                            <%= orders[i].isCheckedOut %>
+                        </td>
+                    </tr>
+                    <% } %>
+                        <% } %>
+        </tbody>
+</body>
+
+</html>

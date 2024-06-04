@@ -36,6 +36,9 @@ const create = async (req, res, next) => {
 		}
 
 		product.id = await generateRandomString();
+		if (req.file) {
+			product.image = req.file.path;
+		}
 
 		const newProduct = await prismaClient.product.create({
 			data: product,
@@ -110,6 +113,10 @@ const update = async (req, res, next) => {
 
 		if (supplierCount === 0) {
 			throw new ResponseError(404, "Supplier not found");
+		}
+
+		if (req.file) {
+			product.image = req.file.path;
 		}
 
 		const updatedProduct = await prismaClient.product.update({
