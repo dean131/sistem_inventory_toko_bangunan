@@ -59,44 +59,67 @@
     <table border="1" cellspacing="0" cellpadding="10" width="100%">
         <thead>
             <tr>
-                <th>No</th>
+                <th rowspan="2">No</th>
+                <th rowspan="2">Id Pembelian</th>
+                <th rowspan="2">Pembeli</th>
+                <th colspan="4">Item Pembelian</th>
+                <th rowspan="2">Waktu Pembelian</th>
+                <th rowspan="2">Total</th>
+            </tr>
+            <tr>
                 <th>Nama Produk</th>
                 <th>Harga</th>
                 <th>Jumlah</th>
-                <th>Total Harga</th>
-                <th>Pembeli</th>
-                <th>Waktu</th>
+                <th>Total</th>
             </tr>
         </thead>
         <tbody>
-            <% for (let i=0; i < orders.length; i++) { %>
-                <% for (let j=0; j < orders[i].items.length; j++) { %>
+            <% let counter=1; %>
+                <% orders.forEach((order, index)=> { %>
                     <tr>
-                        <td>
-                            <%= i + 1 %>
+                        <td rowspan="3">
+                            <%= counter++ %>
+                        </td>
+                        <td rowspan="<%= order.items.count %>">
+                            <%= order.id %>
+                        </td>
+                        <td rowspan="<%= order.items.count %>">
+                            <%= order.customerName %>
                         </td>
                         <td>
-                            <%= orders[i].items[j].product.name %>
+                            <%= order.items[0].name %>
                         </td>
                         <td>
-                            <%= orders[i].items[j].price %>
+                            <%= order.items[0].product.price %>
                         </td>
                         <td>
-                            <%= orders[i].items[j].quantity %>
+                            <%= order.items[0].quantity %>
                         </td>
                         <td>
-                            <%= orders[i].items[j].price * orders[i].items[j].quantity %>
+                            <%= order.items[0].total %>
                         </td>
-                        <td>
-                            <%= orders[i].customerName %>
-                        </td>
-                        <td>
-                            <%= orders[i].isCheckedOut %>
-                        </td>
+                        <td rowspan="<%= order.items.count %>"></td>
+                        <td rowspan="<%= order.items.count %>"></td>
                     </tr>
-                    <% } %>
-                        <% } %>
+                    <% order.items.forEach((item, index)=> { %>
+                        <tr>
+                            <td>
+                                <%= order.items[index+1].name %>
+                            </td>
+                            <td>
+                                <%= order.items[index+1].product.price %>
+                            </td>
+                            <td>
+                                <%= order.items[index+1].quantity %>
+                            </td>
+                            <td>
+                                <%= order.items[index+1].total %>
+                            </td>
+                        </tr>
+                        <% }) %>
+                            <% }) %>
         </tbody>
+    </table>
 </body>
 
 </html>

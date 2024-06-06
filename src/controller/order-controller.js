@@ -195,13 +195,13 @@ const generatePDF = async (req, res, next) => {
 		});
 
 		// format date to  DD/MM/YYYY
-		orders.forEach((order) => {
-			order.isCheckedOut = order.isCheckedOut.toLocaleTimeString("id-ID", {
-				day: "2-digit",
-				month: "2-digit",
-				year: "numeric",
-			});
-		});
+		// orders.forEach((order) => {
+		// 	order.isCheckedOut = order.isCheckedOut.toLocaleTimeString("id-ID", {
+		// 		day: "2-digit",
+		// 		month: "2-digit",
+		// 		year: "numeric",
+		// 	});
+		// });
 
 		// Menghitung jumlah order
 		let totalOrders = orders.length;

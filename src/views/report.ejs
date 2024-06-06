@@ -25,22 +25,17 @@
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 20px;
         }
 
         th,
         td {
-            padding: 10px;
-            border: 1px solid #ddd;
+            border: 1px solid black;
+            padding: 8px;
             text-align: left;
         }
 
         th {
-            background-color: #f4f4f4;
-        }
-
-        .total-row {
-            font-weight: bold;
+            background-color: #f2f2f2;
         }
     </style>
 </head>
@@ -68,50 +63,61 @@
     </p>
 
     <!-- HTML TABLE USING EJS -->
-    <table border="1" cellspacing="0" cellpadding="10" width="100%">
+    <table>
         <thead>
             <tr>
-                <th>No</th>
+                <th rowspan="2">No</th>
+                <th rowspan="2">Id Pembelian</th>
+                <th rowspan="2">Nama Pembeli</th>
+                <th colspan="4">Item Pembelian</th>
+                <th rowspan="2">Waktu Pembelian</th>
+                <th rowspan="2">Total</th>
+            </tr>
+            <tr>
                 <th>Nama Produk</th>
                 <th>Harga</th>
                 <th>Jumlah</th>
-                <th>Total Harga</th>
-                <th>Pembeli</th>
-                <th>Waktu</th>
+                <th>Total</th>
             </tr>
         </thead>
         <tbody>
-            <% let counter=1; %>
-                <% orders.forEach(order=> { %>
-                    <% order.items.forEach(item=> { %>
-                        <tr>
-                            <td>
-                                <%= counter++ %>
+            <% orders.forEach((order, index)=> { %>
+                <% order.items.forEach((item, itemIndex)=> { %>
+                    <tr>
+                        <% if (itemIndex===0) { %>
+                            <td rowspan="<%= order.items.length %>">
+                                <%= index + 1 %>
                             </td>
-                            <td>
-                                <%= item.product.name %>
+                            <td rowspan="<%= order.items.length %>">
+                                <%= order.id %>
                             </td>
-                            <td>Rp<%= item.price.toLocaleString() %>
+                            <td rowspan="<%= order.items.length %>">
+                                <%= order.customerName %>
                             </td>
-                            <td>
-                                <%= item.quantity %>
-                            </td>
-                            <td>Rp<%= (item.price * item.quantity).toLocaleString() %>
-                            </td>
-                            <td>
-                                <p>
-                                    <%= order.customerName %>
-                                </p>
-                                <p>
-                                    <%= order.customerPhone %>
-                                </p>
-                            </td>
-                            <td>
-                                <%= new Date(order.isCheckedOut).toLocaleString() %>
-                            </td>
-                        </tr>
-                        <% }) %>
-                            <% }) %>
+                            <% } %>
+                                <td>
+                                    <%= item.product.name %>
+                                </td>
+                                <td>
+                                    <%= item.product.price %>
+                                </td>
+                                <td>
+                                    <%= item.quantity %>
+                                </td>
+                                <td>
+                                    <%= item.price %>
+                                </td>
+                                <% if (itemIndex===0) { %>
+                                    <td rowspan="<%= order.items.length %>">
+                                        <%= new Date(order.createdAt).toLocaleDateString() %>
+                                    </td>
+                                    <td rowspan="<%= order.items.length %>">
+                                        <%= order.totalPrice %>
+                                    </td>
+                                    <% } %>
+                    </tr>
+                    <% }); %>
+                        <% }); %>
         </tbody>
     </table>
 </body>
