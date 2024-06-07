@@ -41,16 +41,13 @@ const checkout = async (req, res, next) => {
 		const { customerName, customerPhone, customerAddress } = validate(checkoutOrderValidation, req.body);
 		const order = await prismaClient.order.findUnique({
 			where: {
-				id: req.params.id,
+				userId: req.user.id,
+				isCheckedOut: null,
 			},
 		});
 
 		if (!order) {
 			throw new ResponseError(404, "Order not found");
-		}
-
-		if (order.isCheckedOut !== null) {
-			throw new ResponseError(400, "Order already checked out");
 		}
 
 		const orderItems = await prismaClient.orderItem.findMany({
