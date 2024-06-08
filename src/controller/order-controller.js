@@ -38,7 +38,7 @@ const get = async (req, res, next) => {
 
 const getCart = async (req, res, next) => {
 	try {
-		const order = await prismaClient.order.findUnique({
+		const order = await prismaClient.order.findFirst({
 			where: {
 				userId: req.user.id,
 				isCheckedOut: null,
