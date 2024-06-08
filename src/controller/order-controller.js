@@ -176,6 +176,9 @@ const getMany = async (req, res, next) => {
 		const orders = await prismaClient.order.findMany({
 			where: {
 				userId: req.user.id,
+				isCheckedOut: {
+					not: null,
+				},
 			},
 			orderBy: {
 				isCheckedOut: "desc",
