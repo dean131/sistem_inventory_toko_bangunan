@@ -129,6 +129,7 @@ const update = async (req, res, next) => {
 				...(stock && { stock }),
 				...(minStock && { minStock }),
 				...(supplierId && { supplierId }),
+				...(product.image && { image: product.image }),
 			},
 		});
 
