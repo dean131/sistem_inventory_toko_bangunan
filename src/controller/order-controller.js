@@ -115,13 +115,14 @@ const checkout = async (req, res, next) => {
                     where: { id: product.supplierId },
                 });
 
-                const FONNTE_TOKEN = "iCijKRQKHrpbGKfUhZ+1";
+                const FONNTE_TOKEN = process.env.FONNTE_TOKEN;
+                const WHATSAPP_GATEWAY_URL = process.env.WHATSAPP_GATEWAY_URL;
 
                 const supplierWhatsapp = supplier.whatsapp;
                 const messageSupplier = `Stok produk *${product.name}* kurang dari stok minimum. Segera lakukan pengecekan dan penambahan stok produk.`;
                 // send whatsapp message to supplier using axios
                 await axios.post(
-                    "https://api.fonnte.com/send",
+                    WHATSAPP_GATEWAY_URL,
                     {
                         message: messageSupplier,
                         target: supplierWhatsapp,
@@ -139,7 +140,7 @@ const checkout = async (req, res, next) => {
                 const messageAdmin = `Stok produk ${product.name} kurang dari stok minimum. Segera lakukan pengecekan dan penambahan stok produk.`;
                 // send whatsapp message to admin using axios
                 await axios.post(
-                    "https://api.fonnte.com/send",
+                    WHATSAPP_GATEWAY_URL,
                     {
                         message: messageAdmin,
                         target: adminWhatsapp,

@@ -1,6 +1,7 @@
 import { web } from "./application/web.js";
 import { logger } from "./application/logging.js";
 
-web.listen(3000, () => {
-	logger.info("App start on port 3000: http://localhost:3000");
+const APP_PORT = process.env.APP_PORT || 3000;
+web.listen(APP_PORT, () => {
+    logger.info(`App start on: http://localhost:${APP_PORT}`);
 });
