@@ -1,125 +1,102 @@
 <!DOCTYPE html>
 <html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>LAPORAN PEMBELIAN</title>
+        <style>
+            body {
+                font-family: sans-serif;
+                margin: 0;
+                padding: 0;
+                padding: 20px;
+            }
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LAPORAN PEMBELIAN</title>
-    <style>
-        body {
-            font-family: sans-serif;
-            margin: 0;
-            padding: 0;
-            padding: 20px;
-        }
+            h1 {
+                text-align: center;
+                margin-bottom: 20px;
+            }
 
-        h1 {
-            text-align: center;
-            margin-bottom: 20px;
-        }
+            p {
+                margin: 5px 0;
+            }
 
-        p {
-            margin: 5px 0;
-        }
+            table {
+                width: 100%;
+                border-collapse: collapse;
+            }
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
+            th,
+            td {
+                border: 1px solid black;
+                padding: 8px;
+                text-align: left;
+            }
 
-        th,
-        td {
-            border: 1px solid black;
-            padding: 8px;
-            text-align: left;
-        }
+            th {
+                background-color: #f2f2f2;
+            }
+        </style>
+    </head>
 
-        th {
-            background-color: #f2f2f2;
-        }
-    </style>
-</head>
+    <body>
+        <h1>LAPORAN PEMBELIAN</h1>
 
-<body>
-    <h1>LAPORAN PEMBELIAN</h1>
+        <p>
+            Laporan Bulan <strong> <%= month %> </strong> Tahun
+            <strong> <%= year %> </strong>
+        </p>
 
-    <p>
-        Laporan Bulan <strong>
-            <%= month %>
-        </strong> Tahun <strong>
-            <%= year %>
-        </strong>
-    </p>
+        <p>Total Pembelian: <strong> <%= orders.length %> </strong></p>
 
-    <p>
-        Total Pembelian: <strong>
-            <%= orders.length %>
-        </strong>
-    </p>
+        <p>Total Pendapatan: <strong>Rp <%= totalPrice %> </strong></p>
 
-    <p>
-        Total Pendapatan: <strong>Rp <%= orders.reduce((acc, order)=> acc + order.items.reduce((acc, item) => acc +
-                item.price * item.quantity, 0), 0).toLocaleString() %></strong>
-    </p>
-
-    <!-- HTML TABLE USING EJS -->
-    <table>
-        <thead>
-            <tr>
-                <th rowspan="2">No</th>
-                <th rowspan="2">Id Pembelian</th>
-                <th rowspan="2">Nama Pembeli</th>
-                <th colspan="4">Item Pembelian</th>
-                <th rowspan="2">Waktu Pembelian</th>
-                <th rowspan="2">Total</th>
-            </tr>
-            <tr>
-                <th>Nama Produk</th>
-                <th>Harga</th>
-                <th>Jumlah</th>
-                <th>Total</th>
-            </tr>
-        </thead>
-        <tbody>
-            <% orders.forEach((order, index)=> { %>
-                <% order.items.forEach((item, itemIndex)=> { %>
-                    <tr>
-                        <% if (itemIndex===0) { %>
-                            <td rowspan="<%= order.items.length %>">
-                                <%= index + 1 %>
-                            </td>
-                            <td rowspan="<%= order.items.length %>">
-                                <%= order.id %>
-                            </td>
-                            <td rowspan="<%= order.items.length %>">
-                                <%= order.customerName %>
-                            </td>
-                            <% } %>
-                                <td>
-                                    <%= item.product.name %>
-                                </td>
-                                <td>
-                                    <%= item.product.price %>
-                                </td>
-                                <td>
-                                    <%= item.quantity %>
-                                </td>
-                                <td>
-                                    <%= item.price %>
-                                </td>
-                                <% if (itemIndex===0) { %>
-                                    <td rowspan="<%= order.items.length %>">
-                                        <%= new Date(order.createdAt).toLocaleDateString() %>
-                                    </td>
-                                    <td rowspan="<%= order.items.length %>">
-                                        <%= order.totalPrice %>
-                                    </td>
-                                    <% } %>
-                    </tr>
-                    <% }); %>
-                        <% }); %>
-        </tbody>
-    </table>
-</body>
-
+        <!-- HTML TABLE USING EJS -->
+        <table>
+            <thead>
+                <tr>
+                    <th rowspan="2">No</th>
+                    <th rowspan="2">Id Pembelian</th>
+                    <th rowspan="2">Nama Pembeli</th>
+                    <th colspan="4">Item Pembelian</th>
+                    <th rowspan="2">Waktu Pembelian</th>
+                    <th rowspan="2">Total</th>
+                </tr>
+                <tr>
+                    <th>Nama Produk</th>
+                    <th>Harga</th>
+                    <th>Jumlah</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% orders.forEach((order, index)=> { %> <%
+                order.items.forEach((item, itemIndex)=> { %>
+                <tr>
+                    <% if (itemIndex===0) { %>
+                    <td rowspan="<%= order.items.length %>">
+                        <%= index + 1 %>
+                    </td>
+                    <td rowspan="<%= order.items.length %>"><%= order.id %></td>
+                    <td rowspan="<%= order.items.length %>">
+                        <%= order.customerName %>
+                    </td>
+                    <% } %>
+                    <td><%= item.product.name %></td>
+                    <td><%= item.product.price %></td>
+                    <td><%= item.quantity %></td>
+                    <td><%= item.price %></td>
+                    <% if (itemIndex===0) { %>
+                    <td rowspan="<%= order.items.length %>">
+                        <%= new Date(order.createdAt).toLocaleDateString() %>
+                    </td>
+                    <td rowspan="<%= order.items.length %>">
+                        <%= order.totalPrice %>
+                    </td>
+                    <% } %>
+                </tr>
+                <% }); %> <% }); %>
+            </tbody>
+        </table>
+    </body>
 </html>

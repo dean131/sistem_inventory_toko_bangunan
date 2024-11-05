@@ -255,6 +255,7 @@ const generatePDF = async (req, res, next) => {
             {
                 orders: orders,
                 totalOrders: totalOrders,
+                totalPrice: totalPrice,
                 month: month,
                 year: year,
             },
