@@ -1,0 +1,10 @@
+services:
+  app_toko_bangunan:
+    container_name: app_toko_bangunan
+    restart: always
+    ports:
+      - "3000:3000"
+
+  db_toko_bangunan:
+    ports:
+      - "3307:3306"

@@ -1,13 +1,42 @@
-
 services:
-  db:
-    image: mysql:9.1.0
-    environment:
-      MYSQL_ROOT_PASSWORD:
-      # MYSQL_DATABASE: mydb
-      # MYSQL_USER: user
-      # MYSQL_PASSWORD: password
-    ports:
-      - "3307:3306"
+  app_toko_bangunan:
+    container_name: app_toko_bangunan
+    restart: always
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    env_file:
+      - .env
     volumes:
-      - ./mysql:/var/lib/mysql
+      - .:/app
+      - /app/node_modules
+    depends_on:
+      - db_toko_bangunan
+    command: >
+      sh -c "npx prisma migrate deploy && npm run dev"
+    networks:
+      - npm_networks
+
+  db_toko_bangunan:
+    image: mysql:9.1.0
+    container_name: db_toko_bangunan
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: securepassword123
+      MYSQL_DATABASE: db_sistem_inventori_toko_bangunan
+      MYSQL_USER: tunggal
+      MYSQL_PASSWORD: password
+    expose:
+      - "3306"
+    volumes:
+      - db_data_toko_bangunan:/var/lib/mysql
+    networks:
+      - npm_networks
+
+volumes:
+  db_data_toko_bangunan:
+
+
+networks:
+  npm_networks:
+    external: true

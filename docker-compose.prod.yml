@@ -1,0 +1,14 @@
+services:
+  app_toko_bangunan:
+    expose:
+      - "3000"
+    networks:
+      - npm_networks
+
+  db_toko_bangunan:
+    networks:
+      - npm_networks
+
+networks:
+  npm_networks:
+    external: true
