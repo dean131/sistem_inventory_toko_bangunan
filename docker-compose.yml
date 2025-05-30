@@ -26,8 +26,8 @@ services:
       MYSQL_DATABASE: db_sistem_inventori_toko_bangunan
       MYSQL_USER: tunggal
       MYSQL_PASSWORD: password
-    expose:
-      - "3306"
+    ports:
+      - "3306:3306"
     volumes:
       - db_data_toko_bangunan:/var/lib/mysql
     networks:
